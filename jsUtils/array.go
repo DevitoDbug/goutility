@@ -27,3 +27,16 @@ func indexOf[T comparable](arr []T, value T) (int, error) {
 	}
 	return -1, errors.New("element not found")
 }
+
+// Reduce applies a reducer function to a list of elements and returns a single result.
+func Reduce[T comparable](arr []T, reducer func(accumulator T, currentValue T) (T, error), initialValue T) (T, error) {
+	accumulator := initialValue
+	for _, value := range arr {
+		result, err := reducer(accumulator, value)
+		if err != nil {
+			return accumulator, err
+		}
+		accumulator = result
+	}
+	return accumulator, nil
+}
