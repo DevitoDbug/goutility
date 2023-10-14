@@ -1,6 +1,8 @@
 package jsUtils
 
-import "errors"
+import (
+	"errors"
+)
 
 // LastElement returns the last element of the slice.
 func lastElement(arr []interface{}) interface{} {
@@ -39,4 +41,17 @@ func Reduce[T comparable](arr []T, reducer func(accumulator T, currentValue T) (
 		accumulator = result
 	}
 	return accumulator, nil
+}
+
+// LastIndexOf finds the index of the last occurrence of a value in a slice.
+func lastIndexOf(arr []interface{}, value interface{}) (int, error) {
+	if value == nil {
+		return -1, errors.New("element not found: value is nil")
+	}
+	for i := len(arr) - 1; i >= 0; i-- {
+		if value == arr[i] {
+			return i, nil
+		}
+	}
+	return -1, errors.New("element not found")
 }
